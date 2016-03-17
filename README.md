@@ -6,7 +6,7 @@ My chart type was a box-and-whisker plot.  The box-and-whisker plot was chosen b
 
 ##Feedback
 ###Jessica Montoya, Software Product Manager, 03-16-16
-##What do you notice in the visualization?
+###What do you notice in the visualization?
 I notice the red dots on top first. Then, I notice the difference of the hieght of each box that corresponds to each handedness label. 
 
 ###What questions do you have about the data?
