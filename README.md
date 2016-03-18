@@ -24,6 +24,19 @@ What does the height of the box represent? What does the height of the top bar r
 *How would you improve the visualization?*
 It would be nice if when I hovered over the outliers there was more information about the Player: a photo, team, the years of their career. It would make the chart more rewarding to interact with, more fun.  
 
+#### Martin-Martin, Udacity Student, 03-17-16
+I'm missing an axis title for the x-axis. It explains through reading the title of your graph, but it took me a moment. So maybe it's better to have it right away clear.
+
+I like that you put a hover event on the outliers, makes it a nice little feature to explore the names and numbers.
+
+The hover-event for the boxplot basis boxes is however confusing. They turn red, but it seems for no particular reason. There is no additional information coming from this, and it made me expect it would be clickable or something (but it's not)
+You could consider giving them color anyways - or maybe just remove this feature.
+
+Also, this might be your design choice, that we only get to see information about the outliers - the players with especially high amount of homeruns.
+This is maybe also okay, but it feels it should be justified somewhere in the text. You could add a little paragraph explaining what you were doing and why so.
+
+
+
 ##Resources
 Used for tool-tip:  
 
