@@ -2,7 +2,7 @@
 The visualization is a box-and-whisker plot that summarizes the distribution of home runs by how a baseball player bats. The visualization displays the 25th quartile, the median, the 75th quartile, and the upper and lower fences, which are the maximum and minimum excluding outliers, which are colored salmon. Truly exceptional players, outliers in this data set, are discoverable by hovering over the outliers to display the player's name and his career number of home runs.   
 
 ###Design
-My chart type was a box-and-whisker plot.  The box-and-whisker plot was chosen because of its simplicity and the wealth of information that it depicts.  The visual encodings were developed by the mathematican John Tukey, a professional.  I encoded the outliers a salmon-color to bring attention to them against the white space and distribution boxes below.  The layout was chosen to demonstrate the difference among the batting stances.  
+My chart type was a box-and-whisker plot.  The box-and-whisker plot was chosen because of its simplicity and the wealth of information that it depicts.  The visual encodings were developed by the mathematican John Tukey, a professional.  I encoded the outliers a salmon-color to bring attention to them against the white space and distribution boxes below.  The layout was chosen to demonstrate the difference among how a player bats.
 
 ###Feedback
 ####Jessica Montoya, Software Product Manager, 03-16-16
