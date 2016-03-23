@@ -13,7 +13,7 @@ body {
 .box line,
 .box rect,
 .box circle {
-  fill: #ccc;        /* #fff; */
+  fill: #ccc;  
   stroke: #000;
   stroke-width: 1.5px;
 }
@@ -61,8 +61,36 @@ div.tooltip {
     font: 12px sans-serif;    
     background: #ccc; 
     border: 0px;    
-    border-radius: 12px;     
+    border-radius: 0px;     
     pointer-events: none;     
+}
+
+div.tooltipBox { 
+    position: absolute;     
+    text-align: center;     
+    width: 120px;          
+    height: 50px;         
+    padding: 2px;       
+    font: 12px sans-serif;    
+    background: #ccc; 
+    border: 0px;    
+    border-radius: 0px;     
+    pointer-events: none;     
+}
+
+table.tooltipTable {
+  position: absolute;
+  text-align: center;
+  position: absolute;     
+  text-align: center;     
+  width: 150px;          
+  height: 50px;         
+  padding: 2px;       
+  font: 12px sans-serif;    
+  background: #ccc; 
+  border: 0px;    
+  border-radius: 0px;     
+  pointer-events: none; 
 }
 
 </style>
@@ -92,8 +120,14 @@ d3.csv("baseball_data_v3.csv", function(error, csv) {
         n = x.name,
         s = Math.floor(x.HR),
         d = data_one[e];
-    if (!d) d = data_one[e] = [s];
-    else d.push(s);
+    if (!d) {
+      d = data_one[e] = [s];
+      //d = data_two[e] = [[s,n]];
+    }
+    else {
+      d.push(s);
+      //d.push([s,n]);
+    }
     if (s > max) max = s;
     if (s < min) min = s;
   
@@ -137,7 +171,7 @@ d3.csv("baseball_data_v3.csv", function(error, csv) {
     
     // the x-axis
     var x = d3.scale.ordinal()
-      .domain(["Right", "Left", "Both"])     
+      .domain(["Right", "Left", "Switch"])     
       .rangeBands([0, width]);
 
     // the x-axis
@@ -193,9 +227,8 @@ d3.csv("baseball_data_v3.csv", function(error, csv) {
           .attr("text-anchor", "middle")  
           .style("font-size", "16px") 
           //.style("text-decoration", "underline")  
-          .text("Career Home Runs by Batting Stance");
-
-});
+          .text("Player Career Home Runs: Batting Right, Left, or Switch");
+    });
 
 // Sorts multideminsional array
  function sortFunction(a, b) {
