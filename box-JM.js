@@ -1,7 +1,7 @@
 (function() {
 
 // Inspired by http://informationandvisualization.de/blog/box-plot
-      d3.box = function() {
+  d3.box = function() {
   var width = 1,
       height = 1,
       duration = 0,
@@ -52,17 +52,14 @@
       // Stash the new scale.
       this.__chart__ = x1;
 
-      // Define the div for the tooltip for mouse-over outliers
+      // Define the div for the tooltip for mouse-over outliers and fences 
       var div = d3.select("body").append("div") 
       .attr("class", "tooltip")       
       .style("opacity", 0);
 
+      // Define the div for the toolip for the mouse-over box
       var divB = d3.select("body").append("div") 
       .attr("class", "tooltipBox")       
-      .style("opacity", 0);
-
-      var table = d3.select("body").append("table") 
-      .attr("class", "tooltipTable")       
       .style("opacity", 0);
 
       // Note: the box, median, and box tick elements are fixed in number,
