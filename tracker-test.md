@@ -1,1 +1,1 @@
-[![Analytics](https://ga-beacon.appspot.com/UA-75505123-2/welcome-page)](https://github.com/igrigorik/ga-beacon)
+[![Analytics](https://ga-beacon.appspot.com/UA-75505123-2/welcome-page)](https://gist.github.com/ondramie/2abd3b4739cc5ba2aeba)
