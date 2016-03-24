@@ -13,13 +13,13 @@ body {
 .box line,
 .box rect,
 .box circle {
-  fill: #ccc;  
+  fill: Lavender;  
   stroke: #000;
   stroke-width: 1.5px;
 }
 
 .box rect:hover {
-  fill: brown;
+  fill: MediumOrchid;
 }
 
 .box .center {
@@ -27,12 +27,12 @@ body {
 }
 
 .box .outlier {
-  fill: DarkSalmon;
+  fill: PeachPuff;
   stroke: #ccc;
 }
 
 .box .outlier:hover {
-  fill: brown;
+  fill: MediumOrchid;
 }
 
 .axis {
@@ -59,7 +59,7 @@ div.tooltip {
     height: 30px;         
     padding: 2px;       
     font: 12px sans-serif;    
-    background: #ccc; 
+    background: Lavender; 
     border: 0px;    
     border-radius: 0px;     
     pointer-events: none;     
@@ -69,10 +69,10 @@ div.tooltipBox {
     position: absolute;     
     text-align: center;     
     width: 120px;          
-    height: 50px;         
+    height:70px;         
     padding: 2px;       
     font: 12px sans-serif;    
-    background: #ccc; 
+    background: Lavender; 
     border: 0px;    
     border-radius: 0px;     
     pointer-events: none;     
@@ -206,7 +206,8 @@ d3.csv("baseball_data_v3.csv", function(error, csv) {
         .attr("transform", 
           "translate(0," + (height)+ ")")
             //(height + margin.top)+ ")")
-        .call(xAxis);
+        .call(xAxis)
+        .style("font-size", "20px");
 
     // Add the Y Axis
     svg.append("g")
@@ -217,7 +218,7 @@ d3.csv("baseball_data_v3.csv", function(error, csv) {
           .attr("y", 6)
           .attr("dy", ".71em")
           .style("text-anchor", "end")
-          .style("font-size", "15px") 
+          .style("font-size", "20px") 
           .text("Home Runs");    
 
     // add a title
@@ -225,9 +226,9 @@ d3.csv("baseball_data_v3.csv", function(error, csv) {
           .attr("x", (width / 2))             
           .attr("y", 0 + (-margin.top/2))
           .attr("text-anchor", "middle")  
-          .style("font-size", "16px") 
+          .style("font-size", "25px") 
           //.style("text-decoration", "underline")  
-          .text("Player Career Home Runs: Batting Right, Left, or Switch");
+          .text("Career Home Runs for MLB Players: Batting Right, Left, or Switch");
     });
 
 // Sorts multideminsional array

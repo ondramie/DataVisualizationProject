@@ -127,6 +127,10 @@
                               "<td>"+"25th Quartile: "+"</td>"+
                               "<td>"+d[0]+"</td>"+
                             "</tr>" +
+                             "<tr>"+
+                              "<td>"+"Population: "+"</td>"+
+                              "<td>"+ n+"</td>"+
+                             "</tr>" +
                         "</table>")    
             //"75th Quartile: "+d[2]+"<br>" + "Mean: "+d[1]+"<br>"+ "25th Quartile: "+d[0])  
                   .style("left", (d3.event.pageX + 10) + "px")   
@@ -218,7 +222,7 @@
       call explicit works, whereas in a function it doesn't
       */
 
-      if (d.length===533){
+      if (n===533){
         outlier.enter().insert("circle", "text")
               .attr("class", "outlier")
               .attr("r", 5)
