@@ -22,6 +22,12 @@
       console.log('d[0]',d[0]);
       console.log('d.length', d.length)
       
+      var playersNames = d.map(function(d) { 
+        return (d.slice(1,2).toString());
+      });
+      
+      console.log('playersNames:', playersNames);
+
       d = d.map(function(d) { 
         return Number(d.slice(0,1));
       });
@@ -139,7 +145,6 @@
                               "<td>"+ n+"</td>"+
                              "</tr>" +
                         "</table>")    
-            //"75th Quartile: "+d[2]+"<br>" + "Mean: "+d[1]+"<br>"+ "25th Quartile: "+d[0])  
                   .style("left", (d3.event.pageX + 10) + "px")   
                   .style("top", (d3.event.pageY - 50) + "px");   
                 })
@@ -158,7 +163,7 @@
           .attr("y", function(d) { return x1(d[2]); })
           .attr("height", function(d) { return x1(d[0]) - x1(d[2]); });
 
-      // Update median line.
+      // Update median line
       var medianLine = g.selectAll("line.median")
           .data([quartileData[1]]);
 
@@ -226,11 +231,10 @@
           .data(outlierIndices, Number);
 
       /* 
-      call explicit works, whereas in a function it doesn't
+      index is used to match HRs to playersNames; elimates use of .names and if-then statement  
       */
-
-      if (n===533){
-        outlier.enter().insert("circle", "text")
+      
+      outlier.enter().insert("circle", "text")
               .attr("class", "outlier")
               .attr("r", 5)
               .attr("cx", width / 2)
@@ -239,7 +243,7 @@
                 div.transition()    
                     .duration(200)    
                     .style("opacity", .9);    
-                div.html(d[i]+"<br>"+namesArray[0][i][1])  
+                div.html(d[i]+"<br>"+playersNames[i])  
                     .style("left", (d3.event.pageX) + "px")   
                     .style("top", (d3.event.pageY - 28) + "px");  
                 })
@@ -253,60 +257,7 @@
               .duration(duration)
               .attr("cy", function(i) { return x1(d[i]); })
               .style("opacity", 1);
-        };
 
-      if (d.length===254){
-        outlier.enter().insert("circle", "text")
-              .attr("class", "outlier")
-              .attr("r", 5)
-              .attr("cx", width / 2)
-              .attr("cy", function(i) {return x0(d[i]); })
-              .on("mouseover", function(i) { x1(d[i]);   
-                div.transition()    
-                    .duration(200)    
-                    .style("opacity", .9);    
-                div.html(d[i]+"<br>"+namesArray[1][i][1])  
-                    .style("left", (d3.event.pageX) + "px")   
-                    .style("top", (d3.event.pageY - 28) + "px");  
-                })
-                .on("mouseout", function(d) {   
-                div.transition()    
-                    .duration(500)    
-                    .style("opacity", 0); 
-                })          
-              .style("opacity", 1e-6)
-              .transition()
-              .duration(duration)
-              .attr("cy", function(i) { return x1(d[i]); })
-              .style("opacity", 1);
-        };
-
-      if (d.length===83){
-        outlier.enter().insert("circle", "text")
-          .attr("class", "outlier")
-          .attr("r", 5)
-          .attr("cx", width / 2)
-          .attr("cy", function(i) {return x0(d[i]); })
-          .on("mouseover", function(i) { x1(d[i]);   
-            div.transition()    
-                .duration(200)    
-                .style("opacity", .9);    
-            div.html(d[i]+"<br>"+namesArray[2][i][1])  
-                .style("left", (d3.event.pageX) + "px")   
-                .style("top", (d3.event.pageY - 28) + "px");  
-            })
-            .on("mouseout", function(d) {   
-            div.transition()    
-                .duration(500)    
-                .style("opacity", 0); 
-            })          
-          .style("opacity", 1e-6)
-          .transition()
-          .duration(duration)
-          .attr("cy", function(i) { return x1(d[i]); })
-          .style("opacity", 1);
-        };
- 
       // Compute the tick format.
       var format = tickFormat || x1.tickFormat(8);
       console.log("computing the tickFormat");
