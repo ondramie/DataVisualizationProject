@@ -177,8 +177,11 @@ d3.csv("baseball_data_v3.csv", function(error, csv) {
       .scale(y)
       .orient("left");
 
+    console.log('data_one', data_one);
+    console.log('data_two', data_two);
+
     svg.selectAll("box")
-       .data(data_one)
+       .data(data_two)
       .enter().append("g")
         .attr("transform", function(d, i) { 
                             return "translate(" + (translateBox+i*xBands) + 

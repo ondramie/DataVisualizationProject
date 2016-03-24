@@ -10,11 +10,35 @@
       whiskers = boxWhiskers,
       quartiles = boxQuartiles,
       namesArray = [],
-      tickFormat = null;
+      tickFormat = null,
+      results  = [],
+      results2 = [];
 
   // For each small multiple…
   function box(g) {
+    console.log('g',g);
+    console.log('g.length', g.length) 
     g.each(function(d, i) {
+      console.log('d',d);
+      console.log('d[0]',d[0]);
+      console.log('d.length', d.length)
+      
+      for(var i = 0; i < d.length; i++){
+          results.push(Number(d[i].slice(0,1)));
+      };
+
+      console.log('results', results);
+      console.log('results.length', results.length);
+
+      results2 = d.map(function(d) { 
+        return Number(d.slice(0,1));
+      });
+
+      console.log('results2.length', results2.length);
+      console.log('results2', results2);
+
+      d = results2;
+
       d = d.map(value).sort(d3.ascending);
       var g = d3.select(this),
           n = d.length,
