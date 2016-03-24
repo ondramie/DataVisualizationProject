@@ -11,7 +11,6 @@
       quartiles = boxQuartiles,
       namesArray = [],
       tickFormat = null,
-      results  = [],
       results2 = [];
 
   // For each small multiple…
@@ -23,34 +22,10 @@
       console.log('d[0]',d[0]);
       console.log('d.length', d.length)
       
-      var startLoopTime = new Date().getTime();
-
-      for(var i = 0; i < d.length; i++){
-          results.push(Number(d[i].slice(0,1)));
-      };
-
-      console.log('results', results);
-      console.log('results.length', results.length);
-      
-      var endLoopTime = new Date().getTime();      
-
-      console.log('loop time:', endLoopTime-startLoopTime);
-
-      var startMapTime = new Date().getTime();
-      
-      results2 = d.map(function(d) { 
+      d = d.map(function(d) { 
         return Number(d.slice(0,1));
       });
 
-      var endMapTime = new Date().getTime();
-
-      console.log('results2.length', results2.length);
-      console.log('results2', results2);
-      console.log('map-time', endMapTime-startMapTime);
-
-      d = results2;
-
-      //d = d.map(value).sort(d3.ascending);
       var g = d3.select(this),
           n = d.length,
           min = d[0],

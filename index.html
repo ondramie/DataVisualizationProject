@@ -95,31 +95,10 @@ var min = Infinity,
 d3.csv("baseball_data_v3.csv", function(error, csv) {
   if (error) throw error; 
 
-  var data_one = [];
   var data_two = [];
 
-  //original 
+  // extract csv data to n-array
   csv.forEach(function(x) {
-    //debugger;
-    var e = Math.floor(x.dexterity-1),
-        n = x.name,
-        s = Math.floor(x.HR),
-        d = data_one[e];
-    if (!d) {
-      d = data_one[e] = [s];
-      //d = data_two[e] = [[s,n]];
-    }
-    else {
-      d.push(s);
-      //d.push([s,n]);
-    }
-    if (s > max) max = s;
-    if (s < min) min = s;
-  
-  });
-
-  csv.forEach(function(x) {
-    //debugger;
     var e = Math.floor(x.dexterity-1),
         n = x.name,
         s = Math.floor(x.HR),
@@ -131,21 +110,22 @@ d3.csv("baseball_data_v3.csv", function(error, csv) {
   
   });
 
+  // sort n-array
   for (i in data_two) {
       data_two[i].sort(sortFunction);
-      //data_one[i].sort(sortFunction);
   };
 
     // create chart 
     var chart = d3.box()
-    .whiskers(iqr(1.5))
-    .width(width)
-    .height(height);
-
-    chart.domain([min, max]);
+                  .whiskers(iqr(1.5))
+                  .width(width)
+                  .height(height)
+                  .domain([min, max]);
+    
+    // stuff data set for additional features 
     chart.names(data_two);
 
-    //debugger;
+    // create the 'svg'
     var svg = d3.select("body")
         .append("svg")
             .attr("width", width + margin.left + margin.right)
@@ -154,32 +134,31 @@ d3.csv("baseball_data_v3.csv", function(error, csv) {
         .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     
-    // the x-axis
+    // setup x-axis 
     var x = d3.scale.ordinal()
-      .domain(["Right", "Left", "Switch"])     
-      .rangeBands([0, width]);
+              .domain(["Right", "Left", "Switch"])     
+              .rangeBands([0, width]);
 
-    // the x-axis
+    // x-axis
     var xAxis = d3.svg.axis()
-      .scale(x)
-      .orient("bottom");
+                  .scale(x)
+                  .orient("bottom");
 
+    // dynamically move box along x-axis 
     var xBands = x.rangeBand();
     var boxWidth = 125;
     var translateBox = (xBands-boxWidth)/2;
     
-    // the y-axis
+    // setup the y-axis
     var y = d3.scale.linear()
-      .domain([min, max])
-      .range([height, 0]);
+              .domain([min, max])
+              .range([height, 0]);
     
     var yAxis = d3.svg.axis()
-      .scale(y)
-      .orient("left");
+                  .scale(y)
+                  .orient("left");
 
-    console.log('data_one', data_one);
-    console.log('data_two', data_two);
-
+    // add boxes to 'svg'
     svg.selectAll("box")
        .data(data_two)
       .enter().append("g")
@@ -193,7 +172,6 @@ d3.csv("baseball_data_v3.csv", function(error, csv) {
         .attr("class", "x axis")
         .attr("transform", 
           "translate(0," + (height)+ ")")
-            //(height + margin.top)+ ")")
         .call(xAxis)
         .style("font-size", "20px");
 
@@ -209,17 +187,16 @@ d3.csv("baseball_data_v3.csv", function(error, csv) {
           .style("font-size", "20px") 
           .text("Home Runs");    
 
-    // add a title
+    // Add a title
     svg.append("text")
           .attr("x", (width / 2))             
           .attr("y", 0 + (-margin.top/2))
           .attr("text-anchor", "middle")  
           .style("font-size", "25px") 
-          //.style("text-decoration", "underline")  
           .text("Career Home Runs for MLB Players: Batting Right, Left, or Switch");
     });
 
-// Sorts multideminsional array
+// Sorts multi-dimensional array
  function sortFunction(a, b) {
     if (a[0] === b[0]) {
           return 0;
