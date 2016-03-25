@@ -1,8 +1,11 @@
 ###Summary
-The visualization is a box-and-whisker plot that summarizes the distribution of home runs by how a baseball player bats. The visualization displays the 25th quartile, the median, the 75th quartile, and the upper and lower fences, which are the maximum and minimum excluding outliers, which are colored salmon. Truly exceptional players, outliers in this data set, are discoverable by hovering over the outliers to display the player's name and his career number of home runs.   
+The visualization is a box-and-whisker plot that summarizes the distribution of home runs by how a Major League Baseball player bats.  Hovering over the boxes will display the 25th quartile, the median, the 75th quartile, and the population; and hovering over the fences will display the maximum and minimum excluding outliers, which are colored salmon.  Truly exceptional players, outliers in this data set, are discoverable by hovering over the outliers to display the player's name and his career number of home runs.   
+
 
 ###Design
-My chart type was a box-and-whisker plot.  The box-and-whisker plot was chosen because of its simplicity and the wealth of information that it depicts.  The visual encodings were developed by the mathematican John Tukey, a professional.  I encoded the outliers a salmon-color to bring attention to them against the white space and distribution boxes below.  The layout was chosen to demonstrate the difference among how a player bats.
+I chose a box-and-whisker plot because of its simplicity and the wealth of information that it depicts -- after performing exploratory data analysis on the data set.  I did not want to bog the viewer with unnecessary features and movement.  I wanted to depict something simple and straight-forward, yet explanatory.  The visual encodings were developed by the mathematician John Tukey.  I encoded the outliers a salmon-color to bring attention to them against the white space and distribution boxes below.  The layout was chosen to demonstrate the difference among how a player bats.  I chose soft colors to not saturate the viewer's retinas. 
+
+The feedback that I received was mixed.  Initially, people unaccustomed to box-and-whisker plots were a little confounded. With a little coaching, interpretations were resolved, but the visualization left me wanting, so I added a mouse-over to explicitly state what each statistic was on the box.  I also incorporated changes recommended by the reviewers: title change, hover-over box with more data, color-changes, and text size increase.  Changes recommended by reviewers that I did not incorporate were an x-axis title and the time-scale of the data set.  An x-axis title to me seemed redundant, especially after correcting my title.  The time-scale of the data set was not sought since it seemed to me as project creep. 
 
 ###Feedback
 ####Jessica Montoya, Software Product Manager, 03-16-16
@@ -13,7 +16,7 @@ I notice the red dots on top first. Then, I notice the difference of the height 
 Over what period of time was this data collected? Does the data represent professional Baseball players records? Does each dot represent one batter?
 
 *What relationships do you notice?*
-There seem to be a wider range or lefthanded homerun outcomes. Left handers score more home runs. Is that because there are more left-handers? 
+There seem to be a wider range or left-handed homerun outcomes. Left handers score more home runs. Is that because there are more left-handers? 
 
 *What do you think is the main takeaway from this visualization?*
 Lefties are better batters.
@@ -35,7 +38,7 @@ You could consider giving them color anyways - or maybe just remove this feature
 Also, this might be your design choice, that we only get to see information about the outliers - the players with especially high amount of homeruns.
 This is maybe also okay, but it feels it should be justified somewhere in the text. You could add a little paragraph explaining what you were doing and why so.
 
-#### Pablo Yanez, 03-23-16
+#### Pablo Yanez, Principal Software Sales Engineer, 03-23-16
 *What do you notice in the visualization?*
 I see a bar and whiskers diagram with outliers for the performance of  baseball players, sliced by "hand"
 Performance seems to be a bit better for left handed, although not too much. Switching doesn't seem to be a good strategy, although it may just be biased by a smaller sample size. Sample sizes are not in the diagram
