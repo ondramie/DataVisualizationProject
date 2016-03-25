@@ -15,18 +15,11 @@
 
   // For each small multiple…
   function box(g) {
-    console.log('g',g);
-    console.log('g.length', g.length) 
     g.each(function(d, i) {
-      console.log('d',d);
-      console.log('d[0]',d[0]);
-      console.log('d.length', d.length)
       
       var playersNames = d.map(function(d) { 
         return (d.slice(1,2).toString());
       });
-      
-      console.log('playersNames:', playersNames);
 
       d = d.map(function(d) { 
         return Number(d.slice(0,1));
@@ -40,10 +33,12 @@
       // Compute quartiles. Must return exactly 3 elements.
       // quartiles is a d3 funtion: d3.quartiles([...],.25)
       var quartileData = d.quartiles = quartiles(d);
-      // why does he do ths? quariles(d) or d.quartiles?
+      
+      /* why does he do ths? quariles(d) or d.quartiles?
       console.log('quartileData', quartileData);
       console.log('d.quartiles', d.quartiles);
       console.log('quartiles(d)', quartiles(d));
+      */
 
       // Compute whiskers. Must return exactly 2 elements, or null.
       var whiskerIndices = whiskers && whiskers.call(this, d, i),
@@ -233,7 +228,7 @@
       /* 
       index is used to match HRs to playersNames; elimates use of .names and if-then statement  
       */
-      
+
       outlier.enter().insert("circle", "text")
               .attr("class", "outlier")
               .attr("r", 5)
@@ -260,9 +255,11 @@
 
       // Compute the tick format.
       var format = tickFormat || x1.tickFormat(8);
+      /*
       console.log("computing the tickFormat");
       console.log('tickFormat', tickFormat);
       console.log('x1.tickFormat', x1.tickFormat(8));
+      */
 
       // Update box ticks.
       var boxTick = g.selectAll("text.box")
