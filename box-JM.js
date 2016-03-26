@@ -1,6 +1,6 @@
 (function() {
 
-// Inspired by http://informationandvisualization.de/blog/box-plot
+//inspired by box.js from https://bl.ocks.org/mbostock/4061502
   d3.box = function() {
   var width = 1,
       height = 1,
@@ -17,10 +17,12 @@
   function box(g) {
     g.each(function(d, i) {
       
+      // create array of player's names
       var playersNames = d.map(function(d) { 
         return (d.slice(1,2).toString());
       });
 
+      // splite array to only numeric for box calculations
       d = d.map(function(d) { 
         return Number(d.slice(0,1));
       });
@@ -33,12 +35,6 @@
       // Compute quartiles. Must return exactly 3 elements.
       // quartiles is a d3 funtion: d3.quartiles([...],.25)
       var quartileData = d.quartiles = quartiles(d);
-      
-      /* why does he do ths? quariles(d) or d.quartiles?
-      console.log('quartileData', quartileData);
-      console.log('d.quartiles', d.quartiles);
-      console.log('quartiles(d)', quartiles(d));
-      */
 
       // Compute whiskers. Must return exactly 2 elements, or null.
       var whiskerIndices = whiskers && whiskers.call(this, d, i),
@@ -115,9 +111,10 @@
       box.enter().append("rect")
           .attr("class", "box")
           .attr("x", 0)
-          .attr("y", function(d) { return x0(d[2]); })                    // returns 500 the width 
+          .attr("y", function(d) { return x0(d[2]); })                    
           .attr("width", width)
-          .attr("height", function(d) { return x0(d[0]) - x0(d[2]); })    // returns 0
+          .attr("height", function(d) { return x0(d[0]) - x0(d[2]); })
+          .style("fill", function(d) { if (n === 254){ return "Thistle"; };}) 
           .on("mouseover", function(d) {    
               divB.transition()    
                   .duration(200)    
@@ -142,11 +139,13 @@
                         "</table>")    
                   .style("left", (d3.event.pageX + 10) + "px")   
                   .style("top", (d3.event.pageY - 50) + "px");   
+              box.style("fill", "MediumOrchid");
                 })
           .on("mouseout", function(d) {   
               divB.transition()    
                   .duration(500)    
                   .style("opacity", 0); 
+              box.style("fill", function(d) { if (n === 254){ return "Thistle"; };});  
                 }) 
         .transition()
           .duration(duration)
@@ -225,16 +224,18 @@
       var outlier = g.selectAll("circle.outlier")
           .data(outlierIndices, Number);
 
-      /* 
-      index is used to match HRs to playersNames; elimates use of .names and if-then statement  
-      */
-
       outlier.enter().insert("circle", "text")
               .attr("class", "outlier")
               .attr("r", 5)
               .attr("cx", width / 2)
               .attr("cy", function(i) {return x0(d[i]); })
-              .on("mouseover", function(i) { x1(d[i]);   
+              //.style("fill", function(d) { if (n === 254){ return "SandyBrown"; };})
+              .on("mouseover", function(i) { 
+                console.log('d:', d); 
+                console.log('d[i]:', d[i]); 
+                console.log('x0(d[i]):', x0(d[i])); 
+                console.log('x1(d[i]):', x1(d[i]));  
+                //outlier.style("fill", "MediumOrchid");
                 div.transition()    
                     .duration(200)    
                     .style("opacity", .9);    
@@ -242,44 +243,36 @@
                     .style("left", (d3.event.pageX) + "px")   
                     .style("top", (d3.event.pageY - 28) + "px");  
                 })
-                .on("mouseout", function(d) {   
+              .on("mouseout", function(d) {   
                 div.transition()    
                     .duration(500)    
-                    .style("opacity", 0); 
+                    .style("opacity", 0);
+                //outlier.style("fill", function(d) { if (n === 254){ return "SandyBrown"; };});     
                 })          
               .style("opacity", 1e-6)
-              .transition()
+            .transition()
               .duration(duration)
               .attr("cy", function(i) { return x1(d[i]); })
               .style("opacity", 1);
 
       // Compute the tick format.
       var format = tickFormat || x1.tickFormat(8);
-      /*
-      console.log("computing the tickFormat");
-      console.log('tickFormat', tickFormat);
-      console.log('x1.tickFormat', x1.tickFormat(8));
-      */
 
       // Update box ticks.
       var boxTick = g.selectAll("text.box")
           .data(quartileData);
 
-      /* 
-        - uses ternary operator: 
-          condition ? expr 1 : expr 2
-        - quartileData is array with 25th, 50th, and 75th percentile 
-        - turned off
-      */
+      //  Uses ternary operator: condition ? expr 1 : expr 2
+      //  QuartileData is array with 25th, 50th, and 75th percentile 
+      //  Writes Out Quartiles on plot (currently off)
       if (false) {
       boxTick.enter().append("text")
           .attr("class", "box")
           .attr("dy", ".3em")
-          .attr("dx", function(d, i) { return i & 1 ? 6 : -6 })   //returns +6pixels(1) or -6pixels (0,2)
-          .attr("x", function(d, i) { return i & 1 ? width : 0 }) //returns width(1) or zero (0,2)
+          .attr("dx", function(d, i) { return i & 1 ? 6 : -6 })   
+          .attr("x", function(d, i) { return i & 1 ? width : 0 })
           .attr("y", x0)
-          .attr("text-anchor", function(d, i) { return i & 1 ? "start" : "end"; })                                
-          //anchors text @ start(1) or end (0,2). 
+          .attr("text-anchor", function(d, i) { return i & 1 ? "start" : "end"; })                                 
           .text(format)
         .transition()
           .duration(duration)
@@ -294,7 +287,7 @@
       // Update whisker ticks. These are handled separately from the box
       // ticks because they may or may not exist, and we want don't want
       // to join box ticks pre-transition with whisker ticks post-.
-      
+      // Currently off
       if (false){
       var whiskerTick = g.selectAll("text.whisker")
           .data(whiskerData || []);
@@ -340,8 +333,6 @@
   box.width = function(x) {
     if (!arguments.length) return width;
     width = x;
-    //console.log("in bar.width:", width);
-    //console.log(width);
     return box;
   };
 

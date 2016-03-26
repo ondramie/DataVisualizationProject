@@ -95,15 +95,15 @@ var min = Infinity,
 d3.csv("baseball_data_v3.csv", function(error, csv) {
   if (error) throw error; 
 
-  var data_two = [];
+  var data = [];
 
   // extract csv data to n-array
   csv.forEach(function(x) {
     var e = Math.floor(x.dexterity-1),
         n = x.name,
         s = Math.floor(x.HR),
-        d = data_two[e];
-    if (!d) d = data_two[e] = [[s,n]];
+        d = data[e];
+    if (!d) d = data[e] = [[s,n]];
     else d.push([s,n]);
     if (s > max) max = s;
     if (s < min) min = s;
@@ -111,89 +111,89 @@ d3.csv("baseball_data_v3.csv", function(error, csv) {
   });
 
   // sort n-array
-  for (i in data_two) {
-      data_two[i].sort(sortFunction);
+  for (i in data) {
+      data[i].sort(sortFunction);
   };
 
     // create chart 
     var chart = d3.box()
-                  .whiskers(iqr(1.5))
-                  .width(width)
-                  .height(height)
-                  .domain([min, max]);
+        .whiskers(iqr(1.5))
+        .width(width)
+        .height(height)
+        .domain([min, max]);
     
     // stash data set for additional features - perhaps 
-    chart.names(data_two);
+    chart.names(data);
 
     // create the 'svg'
     var svg = d3.select("body")
-        .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.bottom + margin.top)
-            .attr("class", "box")
-        .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.bottom + margin.top)
+        .attr("class", "box")
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     
     // setup x-axis 
     var x = d3.scale.ordinal()
-              .domain(["Right", "Left", "Switch"])     
-              .rangeBands([0, width]);
+        .domain(["Right", "Left", "Switch"])     
+        .rangeBands([0, width]);
 
     // x-axis
     var xAxis = d3.svg.axis()
-                  .scale(x)
-                  .orient("bottom");
+        .scale(x)
+        .orient("bottom");
 
     // dynamically move box along x-axis 
     var xBands = x.rangeBand();
     var boxWidth = 125;
-    var translateBox = (xBands-boxWidth)/2;
+    var translateBox = (xBands - boxWidth) / 2;
     
     // setup the y-axis
     var y = d3.scale.linear()
-              .domain([min, max])
-              .range([height, 0]);
+        .domain([min, max])
+        .range([height, 0]);
     
     var yAxis = d3.svg.axis()
-                  .scale(y)
-                  .orient("left");
+        .scale(y)
+        .orient("left");
 
     // add boxes to 'svg'
     svg.selectAll("box")
-       .data(data_two)
+        .data(data)
       .enter().append("g")
-        .attr("transform", function(d, i) { 
-                            return "translate(" + (translateBox+i*xBands) + 
+       .attr("transform", function(d, i) { 
+                            return "translate(" + (translateBox + i * xBands) + 
                               "," + (0) + ")";})
       .call(chart.width(boxWidth));
     
     // Add the X Axis
     svg.append("g")
         .attr("class", "x axis")
-        .attr("transform", 
-          "translate(0," + (height)+ ")")
-        .call(xAxis)
+        .attr("transform", "translate(0," + (height)+ ")")
+      .call(xAxis)
         .style("font-size", "20px");
 
     // Add the Y Axis
     svg.append("g")
         .attr("class", "y axis")
-        .call(yAxis)
+      .call(yAxis)
         .append("text") // and text1
-          .attr("transform", "rotate(-90)")
-          .attr("y", 6)
-          .attr("dy", ".71em")
-          .style("text-anchor", "end")
-          .style("font-size", "20px") 
-          .text("Home Runs");    
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .style("font-size", "20px") 
+        .text("Home Runs");    
 
     // Add a title
     svg.append("text")
-          .attr("x", (width / 2))             
-          .attr("y", 0 + (-margin.top/2))
-          .attr("text-anchor", "middle")  
-          .style("font-size", "25px") 
-          .text("Career Home Runs for MLB Players: Batting Right, Left, or Switch");
+        .attr("x", (width / 2))             
+        .attr("y", 0 + (-margin.top/2))
+        .attr("text-anchor", "middle")  
+        .style("font-size", "25px") 
+        .text("On Average, Baseball Players Who Bat Left Hit More Homeruns");
+    
     });
 
 // Sorts multi-dimensional array
