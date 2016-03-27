@@ -224,36 +224,63 @@
       var outlier = g.selectAll("circle.outlier")
           .data(outlierIndices, Number);
 
+      console.log("outlierIndices:", outlierIndices);
+          
       outlier.enter().insert("circle", "text")
-              .attr("class", "outlier")
-              .attr("r", 5)
-              .attr("cx", width / 2)
-              .attr("cy", function(i) {return x0(d[i]); })
-              //.style("fill", function(d) { if (n === 254){ return "SandyBrown"; };})
-              .on("mouseover", function(i) { 
-                console.log('d:', d); 
-                console.log('d[i]:', d[i]); 
-                console.log('x0(d[i]):', x0(d[i])); 
-                console.log('x1(d[i]):', x1(d[i]));  
-                //outlier.style("fill", "MediumOrchid");
-                div.transition()    
-                    .duration(200)    
-                    .style("opacity", .9);    
-                div.html(d[i]+"<br>"+playersNames[i])  
-                    .style("left", (d3.event.pageX) + "px")   
-                    .style("top", (d3.event.pageY - 28) + "px");  
-                })
-              .on("mouseout", function(d) {   
-                div.transition()    
-                    .duration(500)    
-                    .style("opacity", 0);
-                //outlier.style("fill", function(d) { if (n === 254){ return "SandyBrown"; };});     
-                })          
-              .style("opacity", 1e-6)
-            .transition()
-              .duration(duration)
-              .attr("cy", function(i) { return x1(d[i]); })
-              .style("opacity", 1);
+          .attr("class", "outlier")
+          .attr("r", 8)
+          .attr("cx", width / 2)
+          .attr("cy", function(i) {return x0(d[i]); })
+          .style("fill", function(d) { 
+            if (n === 254){ return "SandyBrown"; 
+            } else {return "PeachPuff";};
+          })
+          .on("mouseover", function(i) { 
+            //console.log('x:', x); 
+            console.log('d:', d); 
+            console.log('d[i]:', d[i]); 
+            console.log('x0(d[i]):', x0(d[i])); 
+            console.log('x1(d[i]):', x1(d[i]));  
+            
+            d3.select(this)
+              .style('fill', null)
+              .classed("active", true);
+
+            //outlier.style("fill", "MediumOrchid");
+            div.transition()    
+                .duration(200)    
+                .style("opacity", .9);    
+            div.html(d[i]+"<br>"+playersNames[i])  
+                .style("left", (d3.event.pageX) + "px")   
+                .style("top", (d3.event.pageY - 28) + "px");  
+            })
+          .on("mouseout", function(d) {   
+            div.transition()    
+                .duration(500)    
+                .style("opacity", 0);
+            //outlier.style("fill", function(d) { if (n === 254){ return "SandyBrown"; };});     
+            
+            d3.select(this)
+              .classed("active", false)
+              .style("fill", function(d) { if (n === 254){ return "SandyBrown"; };});
+
+            })          
+          .style("opacity", 1e-6)
+        .transition()
+          .duration(duration)
+          .attr("cy", function(i) { return x1(d[i]); })
+          .style("opacity", 1);
+
+      outlier.transition()
+          .duration(duration)
+          .attr("cy", function(i) { return x1(d[i]); })
+          .style("opacity", 1);
+
+      outlier.exit().transition()
+          .duration(duration)
+          .attr("cy", function(i) { return x1(d[i]); })
+          .style("opacity", 1e-6)
+          .remove();
 
       // Compute the tick format.
       var format = tickFormat || x1.tickFormat(8);

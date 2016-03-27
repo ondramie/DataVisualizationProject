@@ -1,11 +1,12 @@
 ###Summary
-The visualization is a box-and-whisker plot that summarizes the distribution of home runs by how a Major League Baseball player bats.  Hovering over the boxes will display the 25th quartile, the median, the 75th quartile, and the population; and hovering over the fences will display the maximum and minimum excluding outliers, which are colored salmon.  Truly exceptional players, outliers in this data set, are discoverable by hovering over the outliers to display the player's name and his career number of home runs.   
-
+The visualization displays distributions of Major League Baseball player career home runs by how they hit. On average, based on statistical history, batters who bat left hit more home runs.  Hovering over the boxes will display the 25th quartile, the median, the 75th quartile, and the population; and hovering over the fences will display the maximum and minimum excluding outliers, which are colored salmon.  Truly exceptional players, outliers in this data set, are discoverable by hovering over the outliers to display the player's name and his career number of home runs.   
 
 ###Design
 I chose a box-and-whisker plot because of its simplicity and the wealth of information that it depicts -- after performing exploratory data analysis on the data set.  I did not want to bog the viewer with unnecessary features and movement.  I wanted to depict something simple and straight-forward, yet explanatory.  The visual encodings were developed by the mathematician John Tukey.  I encoded the outliers a salmon-color to bring attention to them against the white space and distribution boxes below.  The layout was chosen to demonstrate the difference among how a player bats.  I chose soft colors to not saturate the viewer's retinas. 
 
-The feedback that I received was mixed.  Initially, people unaccustomed to box-and-whisker plots were a little confounded. With a little coaching, interpretations were resolved, but the visualization left me wanting, so I added a mouse-over to explicitly state what each statistic was on the box.  I also incorporated changes recommended by the reviewers: title change, hover-over box with more data, color-changes, and text size increase.  Changes recommended by reviewers that I did not incorporate were an x-axis title and the time-scale of the data set.  An x-axis title to me seemed redundant, especially after correcting my title.  The time-scale of the data set was not sought since it seemed to me as project creep. 
+The feedback that I received was mixed.  Initially, people unaccustomed to box-and-whisker plots were a little confounded. With a little coaching, interpretations were resolved, but the visualization left me wanting, so I added a mouse-over to explicitly state what each statistic was on the box.  I also incorporated changes recommended by the reviewers: title change, hover-over box with more data, color-changes, and text size increase.  Changes recommended by reviewers that I did not incorporate were an x-axis title and the time-scale of the data set.  An x-axis title to me seemed redundant, especially after correcting my title.  The time-scale of the data set was not sought since it seemed to me as project creep.
+
+My project feedback centered on representing a clear finding.  In this vein, visual encoding made the data of the batters who hit left more pronounced, while the data of the other batters visually recessed.  The title was changed to corral the viewer to my author-driven narrative.     
 
 ###Feedback
 ####Jessica Montoya, Software Product Manager, 03-16-16
@@ -59,8 +60,12 @@ I dont think so. Although in general most people dont understand whiskers and ba
 *How would you improve the visualization?*
 the title is a bit misleading. You say player, but data seems to be for a number of players. You should specify something like "Home runs for NFL players, 1980 to 2015", or whatever that data is. I'd use :players" in plural, otherwise it can be taken as some kind of average for a single person.
 
+#### Udacity Reviewer, 03-25-16
+The visualization is really great and crafted with great attention to details. The chart is great and it is a nice starting point for explanatory visualization, however, in current form it lacks explanatory power a little bit. Looking at it I feel puzzled what exactly did you want to draw attention to and even README.md doesn't answer this question. It may be high result of left-handed players or similarity between switchers and right-handed or something else. I suggest you highlight your main message (for example, that left-handed players are really great). Check this post about the difference between explanatory graphic and exploratory one for ideas.
+Also, it would be great if you add a little explanatory text somewhere nearby the graph. You may discuss you findings, background of the dataset and how to reader box and wisker plot for unexperienced viewers.
+
 ##Resources
-Used for tool-tip:  
+Used for tool-tips, boxes, CSS:  
 
 + https://leanpub.com/D3-Tips-and-Tricks
 
@@ -71,3 +76,7 @@ Used for creating one svg:
 Used `box.js` in order to create box and whisker plot:
 
 + https://bl.ocks.org/mbostock/4061502
+
+Used to reconcile CSS and '.style' overwrite:
+
++ http://stackoverflow.com/questions/15709304/d3-color-change-on-mouseover-using-classedactive-true
