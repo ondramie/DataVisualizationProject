@@ -78,6 +78,14 @@ div.tooltipBox {
     pointer-events: none;     
 }
 
+.text {
+  max-width: 800px;
+  max-height: 300px;
+  margin-left: 50px;
+  margin-right: 50px;
+  text-align:justify;
+}
+
 </style>
 <body>
 
@@ -133,6 +141,7 @@ d3.csv("baseball_data_v3.csv", function(error, csv) {
         .attr("class", "box")
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        //.attr("class" "paragraph");
     
     // setup x-axis 
     var x = d3.scale.ordinal()
@@ -195,15 +204,18 @@ d3.csv("baseball_data_v3.csv", function(error, csv) {
         .text("Hitters Who Bat Left Hit More Homeruns");
 
     // Add explanatory text
-    d3.select("body").selectAll("p")
+    d3.select("body")
+        .append("div")
+        .attr("width", width)
+        .attr("class", "text")
+        .selectAll("text")
         .data([1])
-        .enter()
-        .append("p")
-        .text(explanatoryText);     
+      .enter().append("text")
+        .text(explanatoryText);
     
     });
 
-var explanatoryText = "Hitters who bat left seem to produce more home runs on average.Mousing over the boxes, the descriptive statistics of each batting group is discoverable.Truly exceptional hitters, which are circles outside the fences, are also discoverable as well by mousing over them."
+var explanatoryText = "Hitters who bat left seem to produce more home runs on average.  Mousing over the boxes, the descriptive statistics of each batting group is discoverable.  Truly exceptional hitters, which are circles outside the fences, are also discoverable as well by mousing over them."
 
 // Sorts multi-dimensional array
  function sortFunction(a, b) {
