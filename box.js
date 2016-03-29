@@ -133,7 +133,7 @@
                               "<td>"+d[0]+"</td>"+
                             "</tr>" +
                              "<tr>"+
-                              "<td>"+"Population: "+"</td>"+
+                              "<td>"+"Sample Size: "+"</td>"+
                               "<td>"+ n+"</td>"+
                              "</tr>" +
                         "</table>")    
