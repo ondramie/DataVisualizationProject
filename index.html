@@ -90,156 +90,158 @@ div.tooltipBox {
 <body>
 
 <script src="//d3js.org/d3.v3.min.js"></script>
-<script src="box-JM.js"></script>
+<script src="box.js"></script>
 <script>
 
-var margin = {top: 50, right: 50, bottom: 50, left: 50},
-    width = 900 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+  var margin = {top: 50, right: 50, bottom: 50, left: 50},
+      width = 900 - margin.left - margin.right,
+      height = 600 - margin.top - margin.bottom;
 
-var min = Infinity,
-    max = -Infinity;
+  var min = Infinity,
+      max = -Infinity;
 
-d3.csv("baseball_data_v3.csv", function(error, csv) {
-  if (error) throw error; 
+    // extracts data from csv file 
+  d3.csv("baseball_data_v3.csv", function(error, csv) {
+    if (error) throw error; 
 
-  var data = [];
+    var data = [];
 
-  // extract csv data to n-array
-  csv.forEach(function(x) {
-    var e = Math.floor(x.dexterity-1),
-        n = x.name,
-        s = Math.floor(x.HR),
-        d = data[e];
-    if (!d) d = data[e] = [[s,n]];
-    else d.push([s,n]);
-    if (s > max) max = s;
-    if (s < min) min = s;
-  
-  });
-
-  // sort n-array
-  for (i in data) {
-      data[i].sort(sortFunction);
-  };
-
-    // create chart 
-    var chart = d3.box()
-        .whiskers(iqr(1.5))
-        .width(width)
-        .height(height)
-        .domain([min, max]);
-    
-    // stash data set for additional features - perhaps 
-    chart.names(data);
-
-    // create the 'svg'
-    var svg = d3.select("body")
-      .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.bottom + margin.top)
-        .attr("class", "box")
-      .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-        //.attr("class" "paragraph");
-    
-    // setup x-axis 
-    var x = d3.scale.ordinal()
-        .domain(["Right", "Left", "Switch"])     
-        .rangeBands([0, width]);
-
-    // x-axis
-    var xAxis = d3.svg.axis()
-        .scale(x)
-        .orient("bottom");
-
-    // dynamically move box along x-axis 
-    var xBands = x.rangeBand();
-    var boxWidth = 125;
-    var translateBox = (xBands - boxWidth) / 2;
-    
-    // setup the y-axis
-    var y = d3.scale.linear()
-        .domain([min, max])
-        .range([height, 0]);
-    
-    var yAxis = d3.svg.axis()
-        .scale(y)
-        .orient("left");
-
-    // add boxes to 'svg'
-    svg.selectAll("box")
-        .data(data)
-      .enter().append("g")
-       .attr("transform", function(d, i) { 
-                            return "translate(" + (translateBox + i * xBands) + 
-                              "," + (0) + ")";})
-      .call(chart.width(boxWidth));
-    
-    // Add the X Axis
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + (height)+ ")")
-      .call(xAxis)
-        .style("font-size", "20px");
-
-    // Add the Y Axis
-    svg.append("g")
-        .attr("class", "y axis")
-      .call(yAxis)
-        .append("text") // and text1
-        .attr("transform", "rotate(-90)")
-        .attr("y", 6)
-        .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .style("font-size", "20px") 
-        .text("Home Runs");    
-
-    // Add a title
-    svg.append("text")
-        .attr("x", (width / 2))             
-        .attr("y", 0 + (-margin.top/2))
-        .attr("text-anchor", "middle")  
-        .style("font-size", "25px") 
-        .text("Hitters Who Bat Left Hit More Home Runs");
-
-    // Add explanatory text
-    d3.select("body")
-        .append("div")
-        .attr("width", width)
-        .attr("class", "text")
-        .selectAll("text")
-        .data([1])
-      .enter().append("text")
-        .text(explanatoryText);
+    // function extracts csv column data and creates 2D-array
+    // 2D-array is sorted then sent to box.js for rendering
+    csv.forEach(function(x) {
+      var e = Math.floor(x.dexterity-1),
+          n = x.name,
+          s = Math.floor(x.HR),
+          d = data[e];
+      if (!d) d = data[e] = [[s,n]];
+      else d.push([s,n]);
+      if (s > max) max = s;
+      if (s < min) min = s;
     
     });
 
-var explanatoryText = "Hitters who bat left seem to produce more home runs on average.  Mousing over the boxes, the descriptive statistics of each batting group is discoverable.  Truly exceptional hitters, which are circles outside the fences, are also discoverable as well by mousing over them."
+    // sort n-array
+    for (i in data) {
+        data[i].sort(sortFunction);
+    };
 
-// Sorts multi-dimensional array
- function sortFunction(a, b) {
-    if (a[0] === b[0]) {
-          return 0;
+      // create chart 
+      var chart = d3.box()
+          .whiskers(iqr(1.5))
+          .width(width)
+          .height(height)
+          .domain([min, max]);
+      
+      // stash data set for additional features - perhaps 
+      chart.names(data);
+
+      // create the 'svg'
+      var svg = d3.select("body")
+        .append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.bottom + margin.top)
+          .attr("class", "box")
+        .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+          //.attr("class" "paragraph");
+      
+      // setup x-axis 
+      var x = d3.scale.ordinal()
+          .domain(["Right", "Left", "Switch"])     
+          .rangeBands([0, width]);
+
+      // x-axis
+      var xAxis = d3.svg.axis()
+          .scale(x)
+          .orient("bottom");
+
+      // dynamically move box along x-axis 
+      var xBands = x.rangeBand();
+      var boxWidth = 125;
+      var translateBox = (xBands - boxWidth) / 2;
+      
+      // setup the y-axis
+      var y = d3.scale.linear()
+          .domain([min, max])
+          .range([height, 0]);
+      
+      var yAxis = d3.svg.axis()
+          .scale(y)
+          .orient("left");
+
+      // add boxes to 'svg'
+      svg.selectAll("box")
+          .data(data)
+        .enter().append("g")
+         .attr("transform", function(d, i) { 
+                              return "translate(" + (translateBox + i * xBands) + 
+                                "," + (0) + ")";})
+        .call(chart.width(boxWidth));
+      
+      // Add the X Axis
+      svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + (height)+ ")")
+        .call(xAxis)
+          .style("font-size", "20px");
+
+      // Add the Y Axis
+      svg.append("g")
+          .attr("class", "y axis")
+        .call(yAxis)
+          .append("text") // and text1
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .style("font-size", "20px") 
+          .text("Home Runs");    
+
+      // Add a title
+      svg.append("text")
+          .attr("x", (width / 2))             
+          .attr("y", 0 + (-margin.top/2))
+          .attr("text-anchor", "middle")  
+          .style("font-size", "25px") 
+          .text("Hitters Who Bat Left Hit More Home Runs");
+
+      // Add explanatory text
+      d3.select("body")
+          .append("div")
+          .attr("width", width)
+          .attr("class", "text")
+          .selectAll("text")
+          .data([1])
+        .enter().append("text")
+          .text(explanatoryText);
+      
+      });
+
+  var explanatoryText = "Hitters who bat left seem to produce more home runs on average.  Mousing over the boxes, the descriptive statistics of each batting group is discoverable.  Truly exceptional hitters, which are circles outside the fences, are also discoverable as well by mousing over them."
+
+  // Sorts multi-dimensional array
+   function sortFunction(a, b) {
+      if (a[0] === b[0]) {
+            return 0;
+        }
+        else {
+          return (a[0] < b[0]) ? -1 : 1;
       }
-      else {
-        return (a[0] < b[0]) ? -1 : 1;
     }
-  }
 
-// Returns a function to compute the interquartile range.
-function iqr(k) {
-   return function(d, i) {
-      var q1 = d.quartiles[0],
-          q3 = d.quartiles[2],
-          iqr = (q3 - q1) * k,
-          i = -1,
-          j = d.length;
-    while (d[++i] < q1 - iqr);
-    while (d[--j] > q3 + iqr);
-    return [i, j];
-  };
-}
+  // Returns a function to compute the interquartile range.
+  function iqr(k) {
+     return function(d, i) {
+        var q1 = d.quartiles[0],
+            q3 = d.quartiles[2],
+            iqr = (q3 - q1) * k,
+            i = -1,
+            j = d.length;
+      while (d[++i] < q1 - iqr);
+      while (d[--j] > q3 + iqr);
+      return [i, j];
+    };
+  }
 
 </script>
 </body>
